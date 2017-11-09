@@ -1,12 +1,20 @@
 # html-to-draftjs
-Nodejs command line tool for converting any html to draftjs compatible content
+Nodejs command line tool for converting html files to draftjs compatible content
 
-This script takes one argument which is an html filename.  It converts the html to draft-js ContentState and saves the ContentState to a file called contentState.js
+To get started:
+
+npm install --save https://github.com/dictyBase/html-to-draftjs
+
+The script has one main command called 'convert'.  This command takes one required argument which is an html filename.  It also takes an optional second argument which is an ouput file in which to save the new draft-js ContentState.  It converts the html file to draft-js ContentState and saves the ContentState to the output file if provided, otherwise to a file called contentState.js.
 
 To run the script type:
 
-node index.js filename
+node index convert|c <inputFile> [outputFile]
 
 Example:
 
-node index.js ./example.html
+node index c example.html output.js
+
+For help type:
+
+node index -h
