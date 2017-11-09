@@ -3,27 +3,35 @@
 const fs = require('fs')
 const stateFromHTML = require('draft-js-import-html').stateFromHTML
 const JSDOM = require('jsdom').JSDOM
+const program = require('commander')
 
-let contentState
-const file = process.argv[2]
+program
+  .version('1.0.0')
+  .description('Convert HTML to Draft-JS ContentState')
 
-fs.readFile(file, 'UTF-8', (err, html) => {
-  if (err) {
-    console.log(err)
-  }
+program
+  .command('convert <inputFile> [outputFile]')
+  .alias('c')
+  .description('Converts HTML file to Draft-JS ContentState and saves to optional outputFile or contentState.js')
+  .action((inputFile, outputFile) => {
+    fs.readFile(inputFile, 'UTF-8', (err, html) => {
+      if (err) {
+        console.log(err)
+      }
 
-  const dom = new JSDOM(html)
-  global.document = dom.window.document
-  contentState = stateFromHTML(html)
-  const contentStateString = JSON.stringify(contentState)
+      const dom = new JSDOM(html)
+      global.document = dom.window.document
+      let contentState = stateFromHTML(html)
+      const contentStateString = JSON.stringify(contentState)
 
-  fs.writeFile('contentState.js', contentStateString, (err) => {
-    if (err) {
-      console.log(err)
-    }
+      fs.writeFile(`${outputFile ? outputFile : 'contentState.js'}`, contentStateString, (err) => {
+        if (err) {
+          console.log(err)
+        }
 
-    console.log('contentState.js file created')
+        console.log('Conversion complete!')
+      })
+    })
   })
-})
 
-module.exports = contentState
+program.parse(process.argv)
