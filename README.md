@@ -27,7 +27,7 @@ For help type:
 node index -h
 ```
 
-The script has been setup to execute with the 'convert' command.  A suggestion for using this package after it has been downloaded into a project is to setup a script in your package.json file:
+The script has been setup to execute with the 'html-to-draft' command.  A suggestion for using this package after it has been downloaded into a project is to setup a script in your package.json file:
 
 ```
 "scripts": {
