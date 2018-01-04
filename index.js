@@ -4,6 +4,7 @@ const fs = require('fs')
 const stateFromHTML = require('draft-js-import-html').stateFromHTML
 const JSDOM = require('jsdom').JSDOM
 const program = require('commander')
+const convertToRaw = require('draft-js').convertToRaw
 
 program
   .version('1.0.0')
@@ -22,7 +23,7 @@ program
       const dom = new JSDOM(html)
       global.document = dom.window.document
       let contentState = stateFromHTML(html)
-      const contentStateString = JSON.stringify(contentState)
+      const contentStateString = JSON.stringify(convertToRaw(contentState))
 
       fs.writeFile(`${outputFile ? outputFile : 'contentState.js'}`, contentStateString, (err) => {
         if (err) {
